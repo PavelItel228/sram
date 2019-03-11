@@ -23,10 +23,12 @@ class SignUpForm(UserCreationForm):
             'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password Again'}),
         }
 
+
 class CommentsForm(forms.Form):
-    comment = forms.CharField(max_length=1000 , error_messages={'required': 'Введите комментарий'})
+    comment = forms.CharField(max_length=1000, error_messages={'required': 'Введите комментарий'})
+
 
 class StoryForm(forms.Form):
-    title = forms.CharField(max_length=500 , error_messages={'required':"Обязательное поле"})
-    story = forms.CharField(max_length=5000, error_messages={'required':"Обязательное поле"})
-    tags = forms.CharField(max_length= 1000, help_text='Тегги через пробел' , required=False, error_messages={ })
+    title = forms.CharField(max_length=500, error_messages={'required': "Обязательное поле"})
+    story = forms.CharField(max_length=5000, error_messages={'required': "Обязательное поле"})
+    tags = forms.CharField(max_length=1000, help_text='Тегги через пробел', required=False, error_messages={})

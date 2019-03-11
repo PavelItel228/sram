@@ -20,5 +20,8 @@ urlpatterns = [
     path('', views.main),
     path("story/<int:id>/" , views.story_inf),
     path("story/comments/<int:id>", views.comments , name="comm"),
-    path('story/write', views.write , name='write')
+    path('story/write', views.write , name='write'),
+    path('story/like/<int:story_id>' , views.styd),
+    path('story/nelike/<int:story_id>' , views.nestryd),
+    path('story/proud/<int:story_id>' , views.proud),
 ]

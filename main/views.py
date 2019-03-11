@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Story, Comments
+from .models import Story, Comments, Stydno, NeStydno, Proud
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
@@ -64,3 +64,40 @@ def write(request):
             new_story.save()
             return redirect('/')
     return render(request, 'write.html', {'form': form})
+
+
+def styd(request, story_id):
+    p_exist = Proud.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    n_exist = NeStydno.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    if not p_exist and not n_exist:
+        new_like, created = Stydno.objects.get_or_create(user=request.user, story=get_object_or_404(Story, pk=story_id))
+        if not created:
+            new_like.delete()
+        else:
+            new_like.save()
+    return redirect('/')
+
+
+def nestryd(request, story_id):
+    s_exist = Stydno.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    p_exist = Proud.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    if not s_exist and not p_exist:
+        new_like, created = NeStydno.objects.get_or_create(user=request.user, story=get_object_or_404(Story, pk=story_id))
+        if not created:
+            new_like.delete()
+        else:
+            new_like.save()
+    return redirect("/")
+
+
+def proud(request, story_id):
+    s_exist = Stydno.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    n_exist = NeStydno.objects.filter(user=request.user, story=get_object_or_404(Story, pk=story_id)).exists()
+    if not s_exist and not n_exist:
+        new_like, created = Proud.objects.get_or_create(user=request.user, story=get_object_or_404(Story, pk=story_id))
+        if not created:
+            new_like.delete()
+        else:
+            new_like.save()
+
+    return redirect("/")

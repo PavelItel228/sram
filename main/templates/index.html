@@ -41,7 +41,11 @@
                     <a href="#"><li style="display: inline; ">{{ tag.name }}</li></a>
                 {% endfor %}
                 <p style="background-color: azure;margin-bottom: 10px">{{story.story }}</p><hr/>
-                <a href="/story/comments/{{ story.id }}">Комметарии</a>
+                <a href="/story/comments/{{ story.id }}">Комметарии:{{ story.comments_set.count }}</a>
+                <p style="color: darkgreen; display: inline; margin-left: 20px">Голосовать:</p>
+                <a href="/story/like/{{ story.id }}">[Стыдно:{{ story.stydno_set.count }}]</a>
+                <a href="/story/nelike/{{ story.id }}">[Не стыдно:{{ story.nestydno_set.count }}]</a>
+                <a href="/story/proud/{{ story.id }}">[Я бы гордился:{{ story.proud_set.count }}]</a>
 
             </div>
         {% endfor %}
