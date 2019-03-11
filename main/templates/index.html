@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>sramu.net</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+</head>
+<body>
+    <header>
+        <a href="/" style="text-decoration: none;"><h1 class="logo" style="display: inline">Cраму.нет</h1></a>
+        {% if user.is_authenticated %}
+            <p style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">{{ user.username }}<a href="/accounts/logout" style=" background-color: black; color:white;">, выйти</a></p>
+        {% else %}
+            <a href="/accounts/login" style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">Войти</a>
+            <a href="/accounts/reg" style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">Зарегестрироваться</a>
+        {% endif %}
+        <br><h3  style="color: white; background-color: black; display: inline">{{ count }} постыдных историй, рассказаных реальными людьми </h3>
+
+    </header>
+    <div class="storys">
+        <div class="links">
+            <a href="/story/write" ><h1 style="text-align: center; margin-bottom: 15px; padding-top: 30px;">[Расскажи свою историю]</h1></a>
+            <ul>
+                <li>Топ:</li>
+                <li><a href="#" >Стыдно</a></li>
+                <li><a href="#" >Не cтыдно</a></li>
+                <li><a href="#" >Я бы гордился</a></li>
+                <li><a href="#" >Яма-отстойник свежих новостей</a></li>
+            </ul>
+        </div>
+        {% for story in storys %}
+            <div style="margin-top: 15px;" class="story-box">
+                <a href="/story/{{ story.id }}"><h1 id="title">{{ story.title }}</h1></a>
+                <a href="/story/{{ story.id }}"><p style="display: inline;padding-right: 130px;">Ссылка на историю</p></a>
+                <p style="display: inline;">Тэги: </p>
+                {% for tag in story.tags.all %}
+                    <a href="#"><li style="display: inline; ">{{ tag.name }}</li></a>
+                {% endfor %}
+                <p style="background-color: azure;margin-bottom: 10px">{{story.story }}</p><hr/>
+                <a href="/story/comments/{{ story.id }}">Комметарии</a>
+
+            </div>
+        {% endfor %}
+
+     </div>
+</body>
+</html>

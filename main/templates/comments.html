@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Коменты</title>
+</head>
+<body style="font-family: Arial, sans-serif ; margin: 0; padding: 0;background-color: lavender">
+    <header style="background-color: black ;">
+        <a href="/" style="text-decoration: none;"><h1 style="display: inline ; color: white">Cраму.нет</h1></a>
+        {% if user.is_authenticated %}
+            <p style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">{{ user.username }}<a href="/accounts/logout" style=" background-color: black; color:white;">, выйти</a></p>
+        {% else %}
+            <a href="/accounts/login" style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">Войти</a>
+            <a href="/accounts/reg" style="float: right; background-color: black; color:white; margin:20px 20px 0 0;">Зарегестрироваться</a>
+        {% endif %}
+
+
+    </header>
+<div style="margin-left: 20px ; margin-right: 500px; border-right: black solid 2px">
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'comm' id=story.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" next="" style="
+  background-color: black; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+">Оставить коментарий</button>
+</form>
+        {% else %}
+        <a href="/accounts/login">Войти, </a>
+            <a href="/accounts/reg">Зарегестрироваться</a>
+{% endif %}
+
+
+    <div style="border-top: black solid 2px; margin-top: 10px;">
+ {% for comment in comments %}
+     <p style="display: inline">{{ comment.user }}: {{ comment.text }}</p><br/>
+
+
+ {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
